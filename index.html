@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Live IPO GMP List</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body { background: #f4f6fa; }
+    .table thead { background: #343a40; color: #fff; }
+    .container { margin-top: 40px; }
+    .card-table {
+      background: #fff;
+      border-radius: 18px;
+      box-shadow: 0 4px 24px rgba(44,62,80,0.08);
+      padding: 24px 18px;
+      margin-bottom: 40px;
+    }
+    .table {
+      border-radius: 12px;
+      overflow: hidden;
+      margin-bottom: 0;
+    }
+    .table-striped > tbody > tr:nth-of-type(odd) {
+      background-color: #f8fafc;
+    }
+    .table-hover tbody tr:hover {
+      background-color: #e3f2fd;
+      transition: background 0.2s;
+    }
+    .nav-tabs .nav-link.active {
+      background: #fff;
+      border-color: #dee2e6 #dee2e6 #fff;
+      color: #212529;
+      font-weight: 600;
+      box-shadow: 0 2px 8px rgba(44,62,80,0.06);
+      border-radius: 8px 8px 0 0;
+    }
+    .nav-tabs .nav-link {
+      color: #1976d2;
+      font-size: 1.1rem;
+      margin: 0 8px;
+      border-radius: 8px 8px 0 0;
+      transition: background 0.2s, color 0.2s;
+    }
+    .nav-tabs .nav-link:hover {
+      background: #e3f2fd;
+      color: #0d47a1;
+    }
+    .search-bar {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(44,62,80,0.06);
+      padding: 16px 18px 10px 18px;
+      margin-bottom: 18px;
+    }
+    .search-bar input {
+      font-size: 1.05rem;
+      border-radius: 8px;
+    }
+    .search-bar .btn {
+      font-size: 1.05rem;
+      border-radius: 8px;
+      min-width: 110px;
+    }
+    .gmp-positive { color: #388e3c; font-weight: 600; }
+    .gmp-negative { color: #d32f2f; font-weight: 600; }
+    .gmp-zero { color: #757575; font-weight: 600; }
+    .listing-positive { color: #388e3c; }
+    .listing-negative { color: #d32f2f; }
+    .listing-zero { color: #757575; }
+    .fire-rating { font-size: 1.2em; letter-spacing: 1px; }
+    .ipo-link { color: #1976d2; text-decoration: underline; font-weight: 500; }
+    .ipo-link:hover { color: #0d47a1; text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <ul class="nav nav-tabs justify-content-center mb-4" id="ipoTabs">
+      <li class="nav-item"><a class="nav-link active" data-endpoint="all" href="#">All</a></li>
+      <li class="nav-item"><a class="nav-link" data-endpoint="mainboard" href="#">Mainboard</a></li>
+      <li class="nav-item"><a class="nav-link" data-endpoint="sme" href="#">SME</a></li>
+      <li class="nav-item"><a class="nav-link" data-endpoint="current" href="#">Current IPOs</a></li>
+      <li class="nav-item"><a class="nav-link" data-endpoint="close" href="#">Close</a></li>
+      <li class="nav-item"><a class="nav-link" data-endpoint="listed" href="#">Listed</a></li>
+    </ul>
+    <div class="search-bar mb-3 d-flex align-items-center gap-2">
+      <input type="text" id="searchInput" class="form-control w-auto" placeholder="ipo" style="max-width: 250px;">
+      <button class="btn btn-success" id="searchBtn">Search</button>
+      <button class="btn btn-danger" id="clearBtn">Clear Search</button>
+    </div>
+    <h2 class="mb-2">Current IPO GMP</h2>
+    <div class="mb-2 text-muted" style="font-size:1.1em;">Total Records: <span id="totalRecords">0</span></div>
+    <div class="card-table table-responsive mb-5">
+      <table class="table table-bordered table-hover table-striped align-middle" id="ipoTable">
+        <thead>
+          <tr>
+            <th class="sortable" data-col="Name">Name <span class="sort-icon"></span></th>
+            <th class="sortable" data-col="GMP">GMP <span class="sort-icon"></span></th>
+            <th class="sortable" data-col="Fire Rating">Fire Rating <span class="sort-icon"></span></th>
+            <th class="sortable" data-col="Sub">Sub <span class="sort-icon"></span></th>
+            <th class="sortable" data-col="Price">Price <span class="sort-icon"></span></th>
+            <th class="sortable" data-col="Est Listing">Est Listing <span class="sort-icon"></span></th>
+            <th class="sortable" data-col="IPO Size">IPO Size <span class="sort-icon"></span></th>
+            <th class="sortable" data-col="Lot">Lot <span class="sort-icon"></span></th>
+            <th class="sortable" data-col="Open">Open <span class="sort-icon"></span></th>
+            <th class="sortable" data-col="Close">Close <span class="sort-icon"></span></th>
+            <th class="sortable" data-col="BoA Dt">BoA Dt <span class="sort-icon"></span></th>
+            <th class="sortable" data-col="Listing">Listing <span class="sort-icon"></span></th>
+            <th class="sortable" data-col="GMP Updated">GMP Updated <span class="sort-icon"></span></th>
+          </tr>
+          <tr>
+            <th><input class="form-control form-control-sm" placeholder="Search..." disabled></th>
+            <th><input class="form-control form-control-sm" placeholder="Search..." disabled></th>
+            <th><input class="form-control form-control-sm" placeholder="Search..." disabled></th>
+            <th><input class="form-control form-control-sm" placeholder="Search..." disabled></th>
+            <th><input class="form-control form-control-sm" placeholder="Search..." disabled></th>
+            <th><input class="form-control form-control-sm" placeholder="Search..." disabled></th>
+            <th><input class="form-control form-control-sm" placeholder="Search..." disabled></th>
+            <th><input class="form-control form-control-sm" placeholder="Search..." disabled></th>
+            <th><input class="form-control form-control-sm" placeholder="Search..." disabled></th>
+            <th><input class="form-control form-control-sm" placeholder="Search..." disabled></th>
+            <th><input class="form-control form-control-sm" placeholder="Search..." disabled></th>
+            <th><input class="form-control form-control-sm" placeholder="Search..." disabled></th>
+            <th><input class="form-control form-control-sm" placeholder="Search..." disabled></th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Data will be inserted here -->
+        </tbody>
+      </table>
+    </div>
+    <h3 class="mb-3 mt-5">IPO & Investor Blogs</h3>
+    <div class="row" id="blogSection">
+      <!-- Blog cards will be inserted here -->
+    </div>
+  </div>
+  <script>
+    let ipoData = [];
+    let currentTab = 'all';
+    let sortState = { col: '', dir: 'asc' };
+    const apiBase = 'https://webnodejs.investorgain.com/cloud/report/data-read/331/1/6/2025/2025-26/0/';
+    const apiVersion = 'v=23-18';
+
+    function getApiUrl(tab, searchValue = '') {
+      if (searchValue) {
+        if (tab === 'all' || tab === 'mainboard' || tab === 'sme' || tab === 'close' || tab === 'listed') {
+          return `${apiBase}${tab}?search=search_ipo%3D${encodeURIComponent(searchValue)}&${apiVersion}`;
+        }
+        if (tab === 'current') {
+          return `${apiBase}ipo?search=search_ipo%3D${encodeURIComponent(searchValue)}&${apiVersion}`;
+        }
+      } else {
+        return `${apiBase}${tab}?search=&${apiVersion}`;
+      }
+    }
+
+    function renderTable(data) {
+      const table = document.querySelector('#ipoTable tbody');
+      table.innerHTML = '';
+      let displayData = data;
+      if (currentTab === 'mainboard') {
+        displayData = data.slice(0, 15); // Show only latest 15 IPOs
+      }
+      // Apply sorting
+      if (sortState.col) {
+        displayData = [...displayData].sort((a, b) => {
+          let valA = a[sortState.col] || '';
+          let valB = b[sortState.col] || '';
+          // Try to parse as float for numeric columns
+          if (!isNaN(parseFloat(valA)) && !isNaN(parseFloat(valB))) {
+            valA = parseFloat(valA);
+            valB = parseFloat(valB);
+          } else {
+            valA = valA.toString().toLowerCase();
+            valB = valB.toString().toLowerCase();
+          }
+          if (valA < valB) return sortState.dir === 'asc' ? -1 : 1;
+          if (valA > valB) return sortState.dir === 'asc' ? 1 : -1;
+          return 0;
+        });
+      }
+      document.getElementById('totalRecords').textContent = displayData.length;
+      if (!displayData.length) {
+        table.innerHTML = `<tr><td colspan="13" class="text-center">No IPOs found.</td></tr>`;
+        return;
+      }
+      displayData.forEach(ipo => {
+        // Name as link if possible
+        let nameHtml = ipo.Name;
+        if (ipo['~urlrewrite_folder_name']) {
+          nameHtml = `<a href='https://www.investorgain.com${ipo['~urlrewrite_folder_name']}' target='_blank' class='ipo-link'>${ipo.Name}</a>`;
+        }
+        // Add yellow U badge if present
+        if (ipo.Name && ipo.Name.endsWith('IPO U')) {
+          nameHtml += ' <span class="badge bg-warning text-dark" style="font-size:1em;vertical-align:middle;">U</span>';
+        }
+        // Fire Rating
+        let fireHtml = '';
+        if (ipo['Fire Rating']) {
+          fireHtml = `<span class='fire-rating'>${ipo['Fire Rating']}</span>`;
+        }
+        table.innerHTML += `
+          <tr>
+            <td>${nameHtml}</td>
+            <td>${ipo.GMP}</td>
+            <td>${fireHtml}</td>
+            <td>${ipo.Sub || ''}</td>
+            <td>${ipo.Price}</td>
+            <td>${ipo['Est Listing'] || ''}</td>
+            <td>${ipo['IPO Size']}</td>
+            <td>${ipo.Lot}</td>
+            <td>${ipo.Open}</td>
+            <td>${ipo.Close}</td>
+            <td>${ipo['BoA Dt'] || ''}</td>
+            <td>${ipo.Listing}</td>
+            <td>${ipo['GMP Updated']}</td>
+          </tr>
+        `;
+      });
+      // Update sort icons
+      document.querySelectorAll('.sortable .sort-icon').forEach(icon => {
+        icon.textContent = '';
+      });
+      if (sortState.col) {
+        const th = document.querySelector(`.sortable[data-col='${sortState.col}'] .sort-icon`);
+        if (th) th.textContent = sortState.dir === 'asc' ? '▲' : '▼';
+      }
+    }
+
+    function renderBlogs() {
+      const blogSection = document.getElementById('blogSection');
+      blogSection.innerHTML = `
+        <div class="col-md-6 col-lg-5 mb-4">
+          <div class="card h-100 shadow-sm">
+            <div class="card-body d-flex flex-column">
+              <h5 class="card-title">From Private to Public: How IPOs Shape Investor Opportunities</h5>
+              <p class="card-text flex-grow-1">When a startup becomes a stock-market-listed company, it's not just a financial event—it's a transformation. An IPO (Initial Public Offering) signals maturity, growth ambition, and the willingness to let the public be part of its journey. <br><br><b>What Really Happens in an IPO?</b> An IPO is when a company offers its shares to the public for the first time, often with the help of investment banks. Behind the scenes: Underwriters (banks) evaluate the company and set a price range. Regulators like SEBI (India) or SEC (US) ensure compliance. A prospectus is published detailing finances, risks, and business models. After approval, shares are opened for subscription, and investors can apply to buy them.</p>
+              <a href="https://ipo-investors.blogspot.com/2025/06/from-private-to-public-how-ipos-shape.html" class="btn btn-outline-primary mt-2 align-self-start" target="_blank">Read More</a>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function fetchAndRender(tab, searchValue = '') {
+      const url = getApiUrl(tab, searchValue);
+      fetch(url)
+        .then(res => res.json())
+        .then(data => {
+          ipoData = data.reportTableData || [];
+          renderTable(ipoData);
+        });
+    }
+
+    // Tab click event
+    document.querySelectorAll('#ipoTabs .nav-link').forEach(tab => {
+      tab.addEventListener('click', function(e) {
+        e.preventDefault();
+        document.querySelectorAll('#ipoTabs .nav-link').forEach(t => t.classList.remove('active'));
+        this.classList.add('active');
+        currentTab = this.getAttribute('data-endpoint');
+        document.getElementById('searchInput').value = '';
+        fetchAndRender(currentTab);
+      });
+    });
+
+    // Search button
+    document.getElementById('searchBtn').addEventListener('click', function() {
+      const searchValue = document.getElementById('searchInput').value.trim();
+      fetchAndRender(currentTab, searchValue);
+    });
+
+    // Clear button
+    document.getElementById('clearBtn').addEventListener('click', function() {
+      document.getElementById('searchInput').value = '';
+      fetchAndRender(currentTab);
+    });
+
+    // Sorting event
+    document.querySelectorAll('.sortable').forEach(th => {
+      th.style.cursor = 'pointer';
+      th.addEventListener('click', function() {
+        const col = this.getAttribute('data-col');
+        if (sortState.col === col) {
+          sortState.dir = sortState.dir === 'asc' ? 'desc' : 'asc';
+        } else {
+          sortState.col = col;
+          sortState.dir = 'asc';
+        }
+        renderTable(ipoData);
+      });
+    });
+
+    // Initial load
+    fetchAndRender(currentTab);
+    renderBlogs();
+  </script>
+</body>
+</html> 
