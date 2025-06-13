@@ -5,21 +5,29 @@
   <title>Live IPO GMP List</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle fill='%231976d2' cx='32' cy='32' r='32'/%3E%3Ctext x='50%' y='50%' text-anchor='middle' dy='.35em' font-size='32' font-family='Arial' fill='white'%3E%E2%82%B9%3C/text%3E%3C/svg%3E">
   <style>
     body { background: #f4f6fa; }
-    .table thead { background: #343a40; color: #fff; }
+    .table thead { background: #388e3c; color: #fff; }
     .container { margin-top: 40px; }
     .card-table {
       background: #fff;
       border-radius: 18px;
-      box-shadow: 0 4px 24px rgba(44,62,80,0.08);
+      box-shadow: none;
       padding: 24px 18px;
       margin-bottom: 40px;
+    }
+    .card, .blog-card, .mb-4.card {
+      background: #fff !important;
+      box-shadow: none !important;
+      border: none;
     }
     .table {
       border-radius: 12px;
       overflow: hidden;
       margin-bottom: 0;
+      background: #fff;
+      box-shadow: none;
     }
     .table-striped > tbody > tr:nth-of-type(odd) {
       background-color: #f8fafc;
@@ -30,14 +38,14 @@
     }
     .nav-tabs .nav-link.active {
       background: #fff;
-      border-color: #dee2e6 #dee2e6 #fff;
-      color: #212529;
+      border-color: #388e3c #388e3c #fff;
+      color: #388e3c;
       font-weight: 600;
-      box-shadow: 0 2px 8px rgba(44,62,80,0.06);
+      box-shadow: none;
       border-radius: 8px 8px 0 0;
     }
     .nav-tabs .nav-link {
-      color: #1976d2;
+      color: #388e3c;
       font-size: 1.1rem;
       margin: 0 8px;
       border-radius: 8px 8px 0 0;
@@ -45,12 +53,12 @@
     }
     .nav-tabs .nav-link:hover {
       background: #e3f2fd;
-      color: #0d47a1;
+      color: #1b5e20;
     }
     .search-bar {
       background: #fff;
       border-radius: 12px;
-      box-shadow: 0 2px 8px rgba(44,62,80,0.06);
+      box-shadow: none;
       padding: 16px 18px 10px 18px;
       margin-bottom: 18px;
     }
@@ -70,12 +78,79 @@
     .listing-negative { color: #d32f2f; }
     .listing-zero { color: #757575; }
     .fire-rating { font-size: 1.2em; letter-spacing: 1px; }
-    .ipo-link { color: #1976d2; text-decoration: underline; font-weight: 500; }
-    .ipo-link:hover { color: #0d47a1; text-decoration: underline; }
+    .ipo-link { color: #388e3c; text-decoration: underline; font-weight: 500; }
+    .ipo-link:hover { color: #1b5e20; text-decoration: underline; }
+    /* Loader styles */
+    #loader-overlay {
+      position: fixed;
+      z-index: 9999;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: #e8f5e9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.4s;
+    }
+    .rupee-loader {
+      width: 80px;
+      height: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: spin 1.2s linear infinite;
+      background: none;
+      box-shadow: none;
+    }
+    @keyframes spin {
+      100% { transform: rotate(360deg); }
+    }
+    /* Grey Market Section */
+    .gmp-explanation-card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 32px 24px 18px 24px;
+      margin-bottom: 32px;
+      box-shadow: none;
+    }
+    .gmp-explanation-title {
+      background: #1976d2;
+      color: #fff;
+      font-weight: bold;
+      font-size: 1.5rem;
+      display: inline-block;
+      padding: 6px 18px;
+      border-radius: 6px;
+      margin-bottom: 18px;
+    }
+    .gmp-explanation-list {
+      color: #222;
+      font-size: 1.13rem;
+      margin-bottom: 0;
+    }
+    .gmp-explanation-disclaimer {
+      background: #1976d2;
+      color: #fff;
+      border-radius: 6px;
+      padding: 12px 18px;
+      margin-top: 28px;
+      font-size: 1rem;
+    }
   </style>
 </head>
 <body>
+  <div id="loader-overlay">
+    <div class="rupee-loader">
+      <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="32" cy="32" r="32" fill="#388e3c"/>
+        <text x="50%" y="50%" text-anchor="middle" dy=".35em" font-size="32" font-family="Arial" fill="white">₹</text>
+      </svg>
+    </div>
+  </div>
   <div class="container">
+    <header class="mb-4 mt-4 text-center">
+      <h1 class="display-5 fw-bold" style="color:#1976d2;">investoruday</h1>
+      <p class="lead text-secondary mb-0">Live IPO GMP, latest IPOs, and investor resources. Track the newest IPOs, their grey market premiums, and read expert blogs to make informed investment decisions.</p>
+    </header>
     <ul class="nav nav-tabs justify-content-center mb-4" id="ipoTabs">
       <li class="nav-item"><a class="nav-link active" data-endpoint="all" href="#">All</a></li>
       <li class="nav-item"><a class="nav-link" data-endpoint="mainboard" href="#">Mainboard</a></li>
@@ -130,11 +205,36 @@
         </tbody>
       </table>
     </div>
+    <h3 class="mb-3 mt-5">What is Grey Market and GMP?</h3>
+    <div class="gmp-explanation-card">
+      <div class="gmp-explanation-title">Explanation of Grey Market and GMP in simple terms:</div>
+      <ul class="gmp-explanation-list mt-4">
+        <li>Grey Market is an unofficial market for the Pre IPO.</li>
+        <li>GMP is the premium per share.</li>
+        <li>Kostak is the premium per application.</li>
+        <li>Sub2 or Sub2Sauda is the premium for the allotted application.</li>
+        <li>As GMP is unofficial, thus there are no regulatory bodies (rules and regulations) involved.</li>
+        <li>All transaction for GMP is done in cash.</li>
+        <li>There is no written communication for Grey Market. Small slips of paper is the contract.</li>
+        <li>There is no official dealer. All buying and selling is through word of mouth and trust only.</li>
+        <li>The higher GMP means a higher possibility of IPO getting listed at a bumper price.</li>
+        <li>Fire Rating of a IPO is the measure of how popular is the IPO in terms of expected return.</li>
+        <li>GMP activity can start before the price band announcement.</li>
+      </ul>
+      <div class="gmp-explanation-disclaimer mt-4">
+        Disclaimer from Admins as per SEBI norms: Equity Investment are subject to 100% market risks. Refer your financial consultant advice before Investing. This group is only for Educational and Learning, Knowledge Purposes. Admins have no responsibility for your intended decision & financial losses. Keep calculated & always analyzed your cash position and risk-bearing capacity before following msg of our group.
+      </div>
+    </div>
     <h3 class="mb-3 mt-5">IPO & Investor Blogs</h3>
     <div class="row" id="blogSection">
       <!-- Blog cards will be inserted here -->
     </div>
   </div>
+  <footer class="bg-light text-center py-3 mt-5 border-top">
+    <div class="container">
+      <span class="fw-bold">Made by Uday</span> &mdash; Support: <a href="mailto:uday.devworks@gmail.com">uday.devworks@gmail.com</a>
+    </div>
+  </footer>
   <script>
     let ipoData = [];
     let currentTab = 'all';
@@ -295,6 +395,13 @@
     // Initial load
     fetchAndRender(currentTab);
     renderBlogs();
+
+    // Hide loader when page is ready
+    window.addEventListener('load', function() {
+      const loader = document.getElementById('loader-overlay');
+      if(loader) loader.style.opacity = 0;
+      setTimeout(() => { if(loader) loader.style.display = 'none'; }, 400);
+    });
   </script>
 </body>
 </html> 
