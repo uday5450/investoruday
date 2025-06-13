@@ -28,6 +28,10 @@
       margin-bottom: 0;
       background: #fff;
       box-shadow: none;
+      min-width: 900px;
+    }
+    .table-responsive {
+      overflow-x: auto;
     }
     .table-striped > tbody > tr:nth-of-type(odd) {
       background-color: #f8fafc;
@@ -61,15 +65,21 @@
       box-shadow: none;
       padding: 16px 18px 10px 18px;
       margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
     }
     .search-bar input {
       font-size: 1.05rem;
       border-radius: 8px;
+      flex: 1 1 160px;
+      min-width: 0;
     }
     .search-bar .btn {
       font-size: 1.05rem;
       border-radius: 8px;
       min-width: 110px;
+      white-space: nowrap;
     }
     .gmp-positive { color: #388e3c; font-weight: 600; }
     .gmp-negative { color: #d32f2f; font-weight: 600; }
@@ -134,6 +144,31 @@
       padding: 12px 18px;
       margin-top: 28px;
       font-size: 1rem;
+    }
+    @media (max-width: 991.98px) {
+      .container { margin-top: 24px; }
+      .gmp-explanation-card { padding: 20px 8px 12px 8px; }
+      .gmp-explanation-title { font-size: 1.15rem; padding: 5px 10px; }
+    }
+    @media (max-width: 767.98px) {
+      .container { margin-top: 12px; }
+      .card-table, .gmp-explanation-card { padding: 10px 2px; border-radius: 8px; }
+      .search-bar { flex-direction: column; align-items: stretch; gap: 8px; padding: 10px 6px 8px 6px; }
+      .nav-tabs { flex-wrap: wrap; }
+      .nav-tabs .nav-link { font-size: 1rem; margin: 0 2px 4px 2px; padding: 6px 10px; }
+      .table { min-width: 600px; font-size: 0.95rem; }
+      .gmp-explanation-title { font-size: 1rem; padding: 4px 6px; }
+      .gmp-explanation-list { font-size: 0.98rem; }
+      .gmp-explanation-disclaimer { font-size: 0.92rem; padding: 8px 6px; }
+    }
+    @media (max-width: 575.98px) {
+      .container { margin-top: 4px; padding-left: 2px; padding-right: 2px; }
+      .card-table, .gmp-explanation-card { padding: 4px 0; border-radius: 4px; }
+      .search-bar { padding: 6px 2px 6px 2px; }
+      .table { min-width: 400px; font-size: 0.89rem; }
+      .gmp-explanation-title { font-size: 0.92rem; padding: 2px 3px; }
+      .gmp-explanation-list { font-size: 0.89rem; }
+      .gmp-explanation-disclaimer { font-size: 0.85rem; padding: 5px 2px; }
     }
   </style>
 </head>
