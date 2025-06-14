@@ -193,6 +193,39 @@
     .ipo-details-modal .close:hover {
       color: #e3f2fd;
     }
+    /* Simple Modal styles */
+    .simple-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      z-index: 1000;
+    }
+    .simple-modal-content {
+      position: relative;
+      background: white;
+      margin: 50px auto;
+      padding: 20px;
+      width: 90%;
+      max-width: 800px;
+      max-height: 80vh;
+      overflow-y: auto;
+      border-radius: 8px;
+    }
+    .simple-modal-close {
+      position: absolute;
+      right: 10px;
+      top: 10px;
+      font-size: 24px;
+      cursor: pointer;
+      color: #666;
+    }
+    .simple-modal-close:hover {
+      color: #000;
+    }
   </style>
 </head>
 <body>
@@ -324,24 +357,11 @@
       <!-- Blog cards will be inserted here -->
     </div>
   </div>
-  <!-- Add Modal for IPO Details -->
-  <div class="modal fade ipo-details-modal" id="ipoDetailsModal" tabindex="-1" role="dialog" aria-labelledby="ipoDetailsModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="ipoDetailsModalLabel">IPO Details</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body" id="ipoDetailsContent">
-          <div class="text-center">
-            <div class="spinner-border text-primary" role="status">
-              <span class="sr-only">Loading...</span>
-            </div>
-          </div>
-        </div>
-      </div>
+  <!-- Simple Modal -->
+  <div id="simpleModal" class="simple-modal">
+    <div class="simple-modal-content">
+      <span class="simple-modal-close">&times;</span>
+      <div id="simpleModalContent"></div>
     </div>
   </div>
   <footer class="bg-light text-center py-3 mt-5 border-top">
@@ -356,96 +376,38 @@
     const apiBase = 'https://webnodejs.investorgain.com/cloud/report/data-read/331/1/6/2025/2025-26/0/';
     const apiVersion = 'v=23-18';
 
-    // Function to fetch IPO details
-    async function fetchIpoDetails(url) {
+    // Simple modal functions
+    const simpleModal = document.getElementById('simpleModal');
+    const simpleModalContent = document.getElementById('simpleModalContent');
+    const simpleModalClose = document.querySelector('.simple-modal-close');
+
+    // Close modal when clicking X
+    simpleModalClose.onclick = function() {
+      simpleModal.style.display = "none";
+    }
+
+    // Close modal when clicking outside
+    window.onclick = function(event) {
+      if (event.target == simpleModal) {
+        simpleModal.style.display = "none";
+      }
+    }
+
+    // Simple function to show IPO details
+    async function showIpoDetails(url) {
+      // Show modal with loading
+      simpleModalContent.innerHTML = '<div style="text-align:center;padding:20px;">Loading...</div>';
+      simpleModal.style.display = "block";
+
       try {
-        const response = await fetch(url, {
-          method: 'GET',
-          headers: {
-            'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
-            'accept-language': 'en-US,en;q=0.9',
-            'cache-control': 'max-age=0',
-            'sec-ch-ua': '"Google Chrome";v="137", "Chromium";v="137", "Not/A)Brand";v="24"',
-            'sec-ch-ua-mobile': '?0',
-            'sec-ch-ua-platform': '"Windows"',
-            'sec-fetch-dest': 'document',
-            'sec-fetch-mode': 'navigate',
-            'sec-fetch-site': 'same-origin',
-            'sec-fetch-user': '?1',
-            'upgrade-insecure-requests': '1',
-            'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36',
-            'referer': 'https://www.investorgain.com/report/live-ipo-gmp/331/'
-          },
-          credentials: 'include'
-        });
-        
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        
+        // Fetch the content
+        const response = await fetch(url);
         const html = await response.text();
         
-        // Create a temporary div to parse the HTML
-        const tempDiv = document.createElement('div');
-        tempDiv.innerHTML = html;
-        
-        // Extract the main content
-        const mainContent = tempDiv.querySelector('.container') || tempDiv;
-        
-        // Clean up the content (remove unnecessary scripts, styles, etc.)
-        const scripts = mainContent.getElementsByTagName('script');
-        const styles = mainContent.getElementsByTagName('style');
-        const links = mainContent.getElementsByTagName('link');
-        
-        while (scripts.length > 0) scripts[0].remove();
-        while (styles.length > 0) styles[0].remove();
-        while (links.length > 0) links[0].remove();
-        
-        return mainContent.innerHTML;
+        // Show the content
+        simpleModalContent.innerHTML = html;
       } catch (error) {
-        console.error('Error fetching IPO details:', error);
-        return '<div class="alert alert-danger">Error loading IPO details. Please try again later.</div>';
-      }
-    }
-
-    // Function to show IPO details
-    async function showIpoDetails(url) {
-      const modal = $('#ipoDetailsModal');
-      const content = document.getElementById('ipoDetailsContent');
-      
-      // Show loading spinner
-      content.innerHTML = `
-        <div class="text-center">
-          <div class="spinner-border text-primary" role="status">
-            <span class="sr-only">Loading...</span>
-          </div>
-        </div>
-      `;
-      
-      modal.modal('show');
-      
-      try {
-        // Fetch and display content
-        const html = await fetchIpoDetails(url);
-        content.innerHTML = html;
-        
-        // Refresh ads in the modal content
-        refreshAds();
-      } catch (error) {
-        content.innerHTML = '<div class="alert alert-danger">Error loading IPO details. Please try again later.</div>';
-      }
-    }
-
-    function getApiUrl(tab, searchValue = '') {
-      if (searchValue) {
-        if (tab === 'all' || tab === 'mainboard' || tab === 'sme' || tab === 'close' || tab === 'listed') {
-          return `${apiBase}${tab}?search=search_ipo%3D${encodeURIComponent(searchValue)}&${apiVersion}`;
-        }
-        if (tab === 'current') {
-          return `${apiBase}ipo?search=search_ipo%3D${encodeURIComponent(searchValue)}&${apiVersion}`;
-        }
-      } else {
-        return `${apiBase}${tab}?search=&${apiVersion}`;
+        simpleModalContent.innerHTML = '<div style="color:red;padding:20px;">Error loading content. Please try again.</div>';
       }
     }
 
@@ -514,6 +476,19 @@
       if (sortState.col) {
         const th = document.querySelector(`.sortable[data-col='${sortState.col}'] .sort-icon`);
         if (th) th.textContent = sortState.dir === 'asc' ? '▲' : '▼';
+      }
+    }
+
+    function getApiUrl(tab, searchValue = '') {
+      if (searchValue) {
+        if (tab === 'all' || tab === 'mainboard' || tab === 'sme' || tab === 'close' || tab === 'listed') {
+          return `${apiBase}${tab}?search=search_ipo%3D${encodeURIComponent(searchValue)}&${apiVersion}`;
+        }
+        if (tab === 'current') {
+          return `${apiBase}ipo?search=search_ipo%3D${encodeURIComponent(searchValue)}&${apiVersion}`;
+        }
+      } else {
+        return `${apiBase}${tab}?search=&${apiVersion}`;
       }
     }
 
