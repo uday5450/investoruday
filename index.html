@@ -3,6 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="google-adsense-account" content="ca-pub-4215403144364832">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4215403144364832"
+     crossorigin="anonymous"></script>
   <title>Live IPO GMP List</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -171,6 +173,26 @@
       .gmp-explanation-list { font-size: 0.89rem; }
       .gmp-explanation-disclaimer { font-size: 0.85rem; padding: 5px 2px; }
     }
+    /* Modal styles */
+    .ipo-details-modal .modal-content {
+      border-radius: 12px;
+      border: none;
+    }
+    .ipo-details-modal .modal-header {
+      background: #1976d2;
+      color: white;
+      border-radius: 12px 12px 0 0;
+    }
+    .ipo-details-modal .modal-body {
+      padding: 20px;
+    }
+    .ipo-details-modal .close {
+      color: white;
+      opacity: 1;
+    }
+    .ipo-details-modal .close:hover {
+      color: #e3f2fd;
+    }
   </style>
 </head>
 <body>
@@ -186,6 +208,18 @@
     <header class="mb-4 mt-4 text-center">
       <h1 class="display-5 fw-bold" style="color:#1976d2;">investoruday</h1>
       <p class="lead text-secondary mb-0">Live IPO GMP, latest IPOs, and investor resources. Track the newest IPOs, their grey market premiums, and read expert blogs to make informed investment decisions.</p>
+      <!-- Ad Placement 1 -->
+      <div class="ad-container mt-3 mb-3">
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-4215403144364832"
+             data-ad-slot="1234567890"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+        <script>
+             (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+      </div>
     </header>
     <ul class="nav nav-tabs justify-content-center mb-4" id="ipoTabs">
       <li class="nav-item"><a class="nav-link active" data-endpoint="all" href="#">All</a></li>
@@ -203,6 +237,18 @@
     <h2 class="mb-2">Current IPO GMP</h2>
     <div class="mb-2 text-muted" style="font-size:1.1em;">Total Records: <span id="totalRecords">0</span></div>
     <div class="card-table table-responsive mb-5">
+      <!-- Ad Placement 2 -->
+      <div class="ad-container mb-3">
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-4215403144364832"
+             data-ad-slot="1234567890"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+        <script>
+             (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+      </div>
       <table class="table table-bordered table-hover table-striped align-middle" id="ipoTable">
         <thead>
           <tr>
@@ -262,8 +308,40 @@
       </div>
     </div>
     <h3 class="mb-3 mt-5">IPO & Investor Blogs</h3>
+    <!-- Ad Placement 3 -->
+    <div class="ad-container mb-4">
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="ca-pub-4215403144364832"
+           data-ad-slot="1234567890"
+           data-ad-format="auto"
+           data-full-width-responsive="true"></ins>
+      <script>
+           (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
+    </div>
     <div class="row" id="blogSection">
       <!-- Blog cards will be inserted here -->
+    </div>
+  </div>
+  <!-- Add Modal for IPO Details -->
+  <div class="modal fade ipo-details-modal" id="ipoDetailsModal" tabindex="-1" role="dialog" aria-labelledby="ipoDetailsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="ipoDetailsModalLabel">IPO Details</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body" id="ipoDetailsContent">
+          <div class="text-center">
+            <div class="spinner-border text-primary" role="status">
+              <span class="sr-only">Loading...</span>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
   <footer class="bg-light text-center py-3 mt-5 border-top">
@@ -277,6 +355,57 @@
     let sortState = { col: '', dir: 'asc' };
     const apiBase = 'https://webnodejs.investorgain.com/cloud/report/data-read/331/1/6/2025/2025-26/0/';
     const apiVersion = 'v=23-18';
+
+    // Function to fetch IPO details
+    async function fetchIpoDetails(url) {
+      try {
+        const response = await fetch(url, {
+          headers: {
+            'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
+            'accept-language': 'en-US,en;q=0.9',
+            'cache-control': 'max-age=0',
+            'sec-ch-ua': '"Google Chrome";v="137", "Chromium";v="137", "Not/A)Brand";v="24"',
+            'sec-ch-ua-mobile': '?0',
+            'sec-ch-ua-platform': '"Windows"',
+            'sec-fetch-dest': 'document',
+            'sec-fetch-mode': 'navigate',
+            'sec-fetch-site': 'same-origin',
+            'sec-fetch-user': '?1',
+            'upgrade-insecure-requests': '1',
+            'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36'
+          }
+        });
+        const html = await response.text();
+        return html;
+      } catch (error) {
+        console.error('Error fetching IPO details:', error);
+        return '<div class="alert alert-danger">Error loading IPO details. Please try again later.</div>';
+      }
+    }
+
+    // Function to show IPO details
+    async function showIpoDetails(url) {
+      const modal = $('#ipoDetailsModal');
+      const content = document.getElementById('ipoDetailsContent');
+      
+      // Show loading spinner
+      content.innerHTML = `
+        <div class="text-center">
+          <div class="spinner-border text-primary" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+        </div>
+      `;
+      
+      modal.modal('show');
+      
+      // Fetch and display content
+      const html = await fetchIpoDetails(url);
+      content.innerHTML = html;
+      
+      // Refresh ads in the modal content
+      refreshAds();
+    }
 
     function getApiUrl(tab, searchValue = '') {
       if (searchValue) {
@@ -296,14 +425,12 @@
       table.innerHTML = '';
       let displayData = data;
       if (currentTab === 'mainboard') {
-        displayData = data.slice(0, 15); // Show only latest 15 IPOs
+        displayData = data.slice(0, 15);
       }
-      // Apply sorting
       if (sortState.col) {
         displayData = [...displayData].sort((a, b) => {
           let valA = a[sortState.col] || '';
           let valB = b[sortState.col] || '';
-          // Try to parse as float for numeric columns
           if (!isNaN(parseFloat(valA)) && !isNaN(parseFloat(valB))) {
             valA = parseFloat(valA);
             valB = parseFloat(valB);
@@ -322,16 +449,14 @@
         return;
       }
       displayData.forEach(ipo => {
-        // Name as link if possible
         let nameHtml = ipo.Name;
         if (ipo['~urlrewrite_folder_name']) {
-          nameHtml = `<a href='https://www.investorgain.com${ipo['~urlrewrite_folder_name']}' target='_blank' class='ipo-link'>${ipo.Name}</a>`;
+          const url = `https://www.investorgain.com${ipo['~urlrewrite_folder_name']}`;
+          nameHtml = `<a href="javascript:void(0)" onclick="showIpoDetails('${url}')" class="ipo-link">${ipo.Name}</a>`;
         }
-        // Add yellow U badge if present
         if (ipo.Name && ipo.Name.endsWith('IPO U')) {
           nameHtml += ' <span class="badge bg-warning text-dark" style="font-size:1em;vertical-align:middle;">U</span>';
         }
-        // Fire Rating
         let fireHtml = '';
         if (ipo['Fire Rating']) {
           fireHtml = `<span class='fire-rating'>${ipo['Fire Rating']}</span>`;
@@ -354,7 +479,6 @@
           </tr>
         `;
       });
-      // Update sort icons
       document.querySelectorAll('.sortable .sort-icon').forEach(icon => {
         icon.textContent = '';
       });
@@ -389,7 +513,17 @@
         });
     }
 
-    // Tab click event
+    function refreshAds() {
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    }
+
+    window.addEventListener('load', function() {
+      refreshAds();
+      const loader = document.getElementById('loader-overlay');
+      if(loader) loader.style.opacity = 0;
+      setTimeout(() => { if(loader) loader.style.display = 'none'; }, 400);
+    });
+
     document.querySelectorAll('#ipoTabs .nav-link').forEach(tab => {
       tab.addEventListener('click', function(e) {
         e.preventDefault();
@@ -398,22 +532,22 @@
         currentTab = this.getAttribute('data-endpoint');
         document.getElementById('searchInput').value = '';
         fetchAndRender(currentTab);
+        setTimeout(refreshAds, 1000);
       });
     });
 
-    // Search button
     document.getElementById('searchBtn').addEventListener('click', function() {
       const searchValue = document.getElementById('searchInput').value.trim();
       fetchAndRender(currentTab, searchValue);
+      setTimeout(refreshAds, 1000);
     });
 
-    // Clear button
     document.getElementById('clearBtn').addEventListener('click', function() {
       document.getElementById('searchInput').value = '';
       fetchAndRender(currentTab);
+      setTimeout(refreshAds, 1000);
     });
 
-    // Sorting event
     document.querySelectorAll('.sortable').forEach(th => {
       th.style.cursor = 'pointer';
       th.addEventListener('click', function() {
@@ -428,16 +562,8 @@
       });
     });
 
-    // Initial load
     fetchAndRender(currentTab);
     renderBlogs();
-
-    // Hide loader when page is ready
-    window.addEventListener('load', function() {
-      const loader = document.getElementById('loader-overlay');
-      if(loader) loader.style.opacity = 0;
-      setTimeout(() => { if(loader) loader.style.display = 'none'; }, 400);
-    });
   </script>
 </body>
 </html> 
