@@ -360,6 +360,7 @@
     async function fetchIpoDetails(url) {
       try {
         const response = await fetch(url, {
+          method: 'GET',
           headers: {
             'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
             'accept-language': 'en-US,en;q=0.9',
@@ -372,11 +373,35 @@
             'sec-fetch-site': 'same-origin',
             'sec-fetch-user': '?1',
             'upgrade-insecure-requests': '1',
-            'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36'
-          }
+            'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36',
+            'referer': 'https://www.investorgain.com/report/live-ipo-gmp/331/'
+          },
+          credentials: 'include'
         });
+        
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
         const html = await response.text();
-        return html;
+        
+        // Create a temporary div to parse the HTML
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = html;
+        
+        // Extract the main content
+        const mainContent = tempDiv.querySelector('.container') || tempDiv;
+        
+        // Clean up the content (remove unnecessary scripts, styles, etc.)
+        const scripts = mainContent.getElementsByTagName('script');
+        const styles = mainContent.getElementsByTagName('style');
+        const links = mainContent.getElementsByTagName('link');
+        
+        while (scripts.length > 0) scripts[0].remove();
+        while (styles.length > 0) styles[0].remove();
+        while (links.length > 0) links[0].remove();
+        
+        return mainContent.innerHTML;
       } catch (error) {
         console.error('Error fetching IPO details:', error);
         return '<div class="alert alert-danger">Error loading IPO details. Please try again later.</div>';
@@ -399,12 +424,16 @@
       
       modal.modal('show');
       
-      // Fetch and display content
-      const html = await fetchIpoDetails(url);
-      content.innerHTML = html;
-      
-      // Refresh ads in the modal content
-      refreshAds();
+      try {
+        // Fetch and display content
+        const html = await fetchIpoDetails(url);
+        content.innerHTML = html;
+        
+        // Refresh ads in the modal content
+        refreshAds();
+      } catch (error) {
+        content.innerHTML = '<div class="alert alert-danger">Error loading IPO details. Please try again later.</div>';
+      }
     }
 
     function getApiUrl(tab, searchValue = '') {
