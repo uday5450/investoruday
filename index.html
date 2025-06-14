@@ -395,20 +395,10 @@
 
     // Simple function to show IPO details
     async function showIpoDetails(url) {
-      // Show modal with loading
       simpleModalContent.innerHTML = '<div style="text-align:center;padding:20px;">Loading...</div>';
       simpleModal.style.display = "block";
-
-      try {
-        // Fetch the content
-        const response = await fetch(url);
-        const html = await response.text();
-        
-        // Show the content
-        simpleModalContent.innerHTML = html;
-      } catch (error) {
-        simpleModalContent.innerHTML = '<div style="color:red;padding:20px;">Error loading content. Please try again.</div>';
-      }
+      // Use iframe for external content
+      simpleModalContent.innerHTML = `<iframe src="${url}" width="100%" height="600" style="border:none;"></iframe>`;
     }
 
     function renderTable(data) {
