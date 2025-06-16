@@ -249,9 +249,6 @@
              data-ad-slot="8694453017"
              data-ad-format="auto"
              data-full-width-responsive="true"></ins>
-        <script>
-             (adsbygoogle = window.adsbygoogle || []).push({});
-        </script>
       </div>
     </header>
     <ul class="nav nav-tabs justify-content-center mb-4" id="ipoTabs">
@@ -278,9 +275,6 @@
              data-ad-slot="8694453017"
              data-ad-format="auto"
              data-full-width-responsive="true"></ins>
-        <script>
-             (adsbygoogle = window.adsbygoogle || []).push({});
-        </script>
       </div>
       <table class="table table-bordered table-hover table-striped align-middle" id="ipoTable">
         <thead>
@@ -349,9 +343,6 @@
            data-ad-slot="8694453017"
            data-ad-format="auto"
            data-full-width-responsive="true"></ins>
-      <script>
-           (adsbygoogle = window.adsbygoogle || []).push({});
-      </script>
     </div>
     <div class="row" id="blogSection">
       <!-- Blog cards will be inserted here -->
@@ -510,16 +501,20 @@
     function refreshAds() {
       document.querySelectorAll('.ad-container').forEach(container => {
         // Remove old ad
-        container.innerHTML = `
-          <ins class="adsbygoogle"
-               style="display:block"
-               data-ad-client="ca-pub-4215403144364832"
-               data-ad-slot="8694453017"
-               data-ad-format="auto"
-               data-full-width-responsive="true"></ins>
-        `;
-        // Load new ad
-        (adsbygoogle = window.adsbygoogle || []).push({});
+        while (container.firstChild) container.removeChild(container.firstChild);
+        // Create new ad block
+        const ins = document.createElement('ins');
+        ins.className = 'adsbygoogle';
+        ins.style.display = 'block';
+        ins.setAttribute('data-ad-client', 'ca-pub-4215403144364832');
+        ins.setAttribute('data-ad-slot', '8694453017');
+        ins.setAttribute('data-ad-format', 'auto');
+        ins.setAttribute('data-full-width-responsive', 'true');
+        container.appendChild(ins);
+        // Initialize new ad
+        try {
+          (adsbygoogle = window.adsbygoogle || []).push({});
+        } catch (e) {}
       });
     }
 
@@ -570,8 +565,15 @@
 
     fetchAndRender(currentTab);
     renderBlogs();
+
+    // AdSense initialization for all ad blocks
+    window.addEventListener('DOMContentLoaded', function() {
+      document.querySelectorAll('.adsbygoogle').forEach(function(ad) {
+        try {
+          (adsbygoogle = window.adsbygoogle || []).push({});
+        } catch (e) {}
+      });
+    });
   </script>
 </body>
 </html> 
-
-
