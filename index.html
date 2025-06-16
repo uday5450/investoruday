@@ -508,7 +508,19 @@
     }
 
     function refreshAds() {
-      (adsbygoogle = window.adsbygoogle || []).push({});
+      document.querySelectorAll('.ad-container').forEach(container => {
+        // Remove old ad
+        container.innerHTML = `
+          <ins class="adsbygoogle"
+               style="display:block"
+               data-ad-client="ca-pub-4215403144364832"
+               data-ad-slot="1234567890"
+               data-ad-format="auto"
+               data-full-width-responsive="true"></ins>
+        `;
+        // Load new ad
+        (adsbygoogle = window.adsbygoogle || []).push({});
+      });
     }
 
     window.addEventListener('load', function() {
@@ -561,3 +573,5 @@
   </script>
 </body>
 </html> 
+
+
