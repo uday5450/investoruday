@@ -227,6 +227,8 @@
       color: #000;
     }
   </style>
+  <!-- AMP Ad script for testing -->
+  <script async custom-element="amp-ad" src="https://cdn.ampproject.org/v0/amp-ad-0.1.js"></script>
 </head>
 <body>
   <div id="loader-overlay">
@@ -360,6 +362,15 @@
       <span class="fw-bold">Made by Uday</span> &mdash; Support: <a href="mailto:uday.devworks@gmail.com">uday.devworks@gmail.com</a>
     </div>
   </footer>
+  <!-- AMP Ad block for testing -->
+  <amp-ad width="100vw" height="320"
+    type="adsense"
+    data-ad-client="ca-pub-4215403144364832"
+    data-ad-slot="8694453017"
+    data-auto-format="rspv"
+    data-full-width="">
+    <div overflow=""></div>
+  </amp-ad>
   <script>
     let ipoData = [];
     let currentTab = 'all';
@@ -499,6 +510,7 @@
     }
 
     function refreshAds() {
+      
       document.querySelectorAll('.ad-container').forEach(container => {
         // Remove old ad
         while (container.firstChild) container.removeChild(container.firstChild);
@@ -577,3 +589,5 @@
   </script>
 </body>
 </html> 
+
+
