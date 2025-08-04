@@ -3,7 +3,8 @@
 
 <head>
 	<meta charset="UTF-8">
-	<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4215403144364832" crossorigin="anonymous"></script>
+	<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4215403144364832"
+		crossorigin="anonymous"></script>
 	<!-- Google tag (gtag.js) -->
 	<script async src="https://www.googletagmanager.com/gtag/js?id=G-FVX09NYHHK"></script>
 	<script>
@@ -13,7 +14,7 @@
 
 		gtag('config', 'G-FVX09NYHHK');
 	</script>
-	
+
 	<meta name="google-adsense-account" content="ca-pub-4215403144364832">
 
 	<title>Live IPO GMP List | Latest IPO Grey Market Premium | investoruday</title>
@@ -407,6 +408,12 @@
 		.simple-modal-close:hover {
 			color: #000;
 		}
+
+		/* Download button */
+		.down-btn {
+			border: none;
+			background: none;
+		}
 	</style>
 </head>
 
@@ -434,18 +441,37 @@
 			<p class="lead text-secondary mb-0">Your ultimate guide to investments: IPOs, SIPs, Mutual Funds, and more.
 			</p>
 		</header>
-		<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4215403144364832"
-		     crossorigin="anonymous"></script>
 		<!-- Display Ad 1 -->
-		<ins class="adsbygoogle"
-		     style="display:block"
-		     data-ad-client="ca-pub-4215403144364832"
-		     data-ad-slot="5796998371"
-		     data-ad-format="auto"
-		     data-full-width-responsive="true"></ins>
-		<script>
-		     (adsbygoogle = window.adsbygoogle || []).push({});
-		</script>
+		<ins class="adsbygoogle" style="display:inline-block;width:300px;height:250px"
+			data-ad-client="ca-pub-4215403144364832" data-ad-slot="5796998371"></ins>
+
+		<div>
+			<div style="display: flex; justify-content: center;">
+				<button id="startBtn" type="button" class="down-btn" style="display: none;">
+					<img src="/img/btn.png" alt="btn">
+				</button>
+			</div>
+
+			<div>
+				<div style="text-align: center;">
+					<p id="timer1" style="margin: 0; display: none;">10 Seconds to go...</p>
+				</div>
+
+				<div style="display: grid; place-items: center;">
+					<button id="waitBtn" type="button" class="down-btn" style="display: none;">
+						<img src="img/wait2.png" alt="wait">
+					</button>
+					<button id="doubleBtn" type="button" class="down-btn" style="display: none;">
+						<img src="img/Double.png" alt="Double">
+					</button>
+				</div>
+			</div>
+		</div>
+
+		<!-- Display Ad 1 -->
+		<ins class="adsbygoogle" style="display:inline-block;width:300px;height:250px"
+			data-ad-client="ca-pub-4215403144364832" data-ad-slot="5796998371"></ins>
+
 		<ul class="nav nav-tabs justify-content-center mb-4" id="ipoTabs">
 			<li class="nav-item"><a class="nav-link active" data-endpoint="all" href="#">All</a></li>
 			<li class="nav-item"><a class="nav-link" data-endpoint="mainboard" href="#">Mainboard</a></li>
@@ -454,11 +480,6 @@
 			<li class="nav-item"><a class="nav-link" data-endpoint="close" href="#">Close</a></li>
 			<li class="nav-item"><a class="nav-link" data-endpoint="listed" href="#">Listed</a></li>
 		</ul>
-		<div class="search-bar mb-3 d-flex align-items-center gap-2">
-			<input type="text" id="searchInput" class="form-control w-auto" placeholder="ipo" style="max-width: 250px;">
-			<button class="btn btn-success" id="searchBtn">Search</button>
-			<button class="btn btn-danger" id="clearBtn">Clear Search</button>
-		</div>
 
 		<h2 class="mb-2">Current IPO GMP</h2>
 
@@ -502,7 +523,7 @@
 				</tbody>
 			</table>
 		</div>
-		
+
 		<h3 class="mb-3 mt-5">What is Grey Market and GMP?</h3>
 		<div class="gmp-explanation-card">
 			<div class="gmp-explanation-title">Explanation of Grey Market and GMP in simple terms:</div>
@@ -527,13 +548,36 @@
 				analyzed your cash position and risk-bearing capacity before following msg of our group.
 			</div>
 		</div>
-		
+
 		<h3 class="mb-3 mt-5">IPO & Investor Blogs</h3>
 		<div class="row" id="blogSection">
 			<!-- Blog cards will be inserted here -->
 		</div>
-		
 	</div>
+
+	<!-- Display Ad 1 -->
+	<ins class="adsbygoogle" style="display:inline-block;width:300px;height:250px"
+		data-ad-client="ca-pub-4215403144364832" data-ad-slot="5796998371"></ins>
+
+	<!-- Second Timer Section -->
+	<div id="section2" style="margin-top: 100px;">
+		<div style="text-align: center;">
+			<p id="timer2" style="margin: 0; display: none;">5 Seconds to go...</p>
+		</div>
+		<div style="display: grid; place-items: center;">
+			<button id="waitBtn2" type="button" class="down-btn" style="display: none;">
+				<img src="img/wait2.png" alt="wait">
+			</button>
+			<button id="downloadBtn" type="button" class="down-btn" style="display: none;">
+				<img src="img/Download.png" alt="Download">
+			</button>
+		</div>
+	</div>
+
+	<!-- Display Ad 1 -->
+	<ins class="adsbygoogle" style="display:inline-block;width:300px;height:250px"
+		data-ad-client="ca-pub-4215403144364832" data-ad-slot="5796998371"></ins>
+
 	<!-- Simple Modal -->
 	<div id="simpleModal" class="simple-modal">
 		<div class="simple-modal-content">
@@ -547,11 +591,7 @@
 				href="mailto:uday.devworks@gmail.com">uday.devworks@gmail.com</a>
 		</div>
 	</footer>
-	<!-- AMP Ad block for testing -->
-	<amp-ad width="100vw" height="320" type="adsense" data-ad-client="ca-pub-4215403144364832" data-ad-slot="8694453017"
-		data-auto-format="rspv" data-full-width="">
-		<div overflow=""></div>
-	</amp-ad>
+
 	<script>
 		let ipoData = [];
 		let currentTab = 'all';
@@ -764,6 +804,96 @@
 		}
 	</script>
 
+	<script>
+		(adsbygoogle = window.adsbygoogle || []).push({});
+	</script>
+
+	<!-- JS -->
+	<script src="https://blkblossom.github.io/cdn/js/script.js"></script>
+
+	<script>
+		document.addEventListener("DOMContentLoaded", async () => {
+			const urlParams = new URLSearchParams(window.location.search);
+			const rawParam = urlParams.get("data");
+			const encryptedData = rawParam ? decodeURIComponent(rawParam).replace(/ /g, '+') : null;
+
+			const startBtn = document.getElementById("startBtn");
+			const waitBtn = document.getElementById("waitBtn");
+			const doubleBtn = document.getElementById("doubleBtn");
+			const timerDisplay1 = document.getElementById("timer1");
+
+			const waitBtn2 = document.getElementById("waitBtn2");
+			const downloadBtn = document.getElementById("downloadBtn");
+			const timerDisplay2 = document.getElementById("timer2");
+			const section2 = document.getElementById("section2");
+
+			// Step 1: Show first btn if data is valid
+			if (encryptedData && await checkDecryptURL(encryptedData)) {
+				startBtn.style.display = "block";
+			}
+
+			// Step 2: On first btn click, start first timer
+			startBtn.addEventListener("click", () => {
+				startBtn.style.display = "none";
+				timerDisplay1.style.display = "block";
+				waitBtn.style.display = "block";
+
+				let timeLeft = 10;
+				timerDisplay1.textContent = `${timeLeft} Seconds to go...`;
+
+				const timer1 = setInterval(() => {
+					timeLeft--;
+					timerDisplay1.textContent = `${timeLeft} Seconds to go...`;
+
+					if (timeLeft <= 0) {
+						clearInterval(timer1);
+						timerDisplay1.style.display = "none";
+						waitBtn.style.display = "none";
+						doubleBtn.style.display = "block";
+					}
+				}, 1000);
+			});
+
+			// Step 3: On first final button click, scroll and start second timer
+			doubleBtn.addEventListener("click", () => {
+				// Scroll smoothly to second section
+				section2.scrollIntoView({ behavior: "smooth" });
+
+				// Show second timer and wait2 button
+				timerDisplay2.style.display = "block";
+				waitBtn2.style.display = "block";
+
+				let timeLeft = 5;
+				timerDisplay2.textContent = `${timeLeft} Seconds to go...`;
+
+				const timer2 = setInterval(async () => {
+					timeLeft--;
+					timerDisplay2.textContent = `${timeLeft} Seconds to go...`;
+
+					if (timeLeft <= 0) {
+						clearInterval(timer2);
+						timerDisplay2.style.display = "none";
+						waitBtn2.style.display = "none";
+						downloadBtn.style.display = "block";
+					}
+				}, 1000);
+			}, { once: true }); // <--- ensures it only runs once
+
+			// Step 4: On download button click, decrypt and open URL
+			downloadBtn.addEventListener("click", async () => {
+				try {
+					const downloadLink = await decryptURL(encryptedData);
+					if (downloadLink) {
+						window.open(downloadLink, "_blank");
+					} else {
+						window.open("failed.html", "_blank");
+					}
+				} catch (error) {
+					window.open("failed.html", "_blank");
+				}
+			});
+		});
+	</script>
 </body>
 
 </html>
