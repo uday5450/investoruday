@@ -565,9 +565,9 @@
 		</div>
 	</div>
 
-	<!-- Display Ad 1 -->
+	<!-- Display Ad 3 -->
 	<ins class="adsbygoogle" style="display:inline-block;width:300px;height:250px"
-		data-ad-client="ca-pub-4215403144364832" data-ad-slot="5796998371"></ins>
+		data-ad-client="ca-pub-4215403144364832" data-ad-slot="1142454959"></ins>
 
 	<!-- Second Timer Section -->
 	<div id="section2" style="margin-top: 100px;">
@@ -584,9 +584,9 @@
 		</div>
 	</div>
 
-	<!-- Display Ad 1 -->
+	<!-- Display Ad 4 -->
 	<ins class="adsbygoogle" style="display:inline-block;width:300px;height:250px"
-		data-ad-client="ca-pub-4215403144364832" data-ad-slot="5796998371"></ins>
+		data-ad-client="ca-pub-4215403144364832" data-ad-slot="9755442142"></ins>
 
 	<!-- Simple Modal -->
 	<div id="simpleModal" class="simple-modal">
@@ -746,30 +746,6 @@
 			setTimeout(() => { if (loader) loader.style.display = 'none'; }, 400);
 		});
 
-		document.querySelectorAll('#ipoTabs .nav-link').forEach(tab => {
-			tab.addEventListener('click', function (e) {
-				e.preventDefault();
-				document.querySelectorAll('#ipoTabs .nav-link').forEach(t => t.classList.remove('active'));
-				this.classList.add('active');
-				currentTab = this.getAttribute('data-endpoint');
-				document.getElementById('searchInput').value = '';
-				fetchAndRender(currentTab);
-				setTimeout(refreshAds, 1000);
-			});
-		});
-
-		document.getElementById('searchBtn').addEventListener('click', function () {
-			const searchValue = document.getElementById('searchInput').value.trim();
-			fetchAndRender(currentTab, searchValue);
-			setTimeout(refreshAds, 1000);
-		});
-
-		document.getElementById('clearBtn').addEventListener('click', function () {
-			document.getElementById('searchInput').value = '';
-			fetchAndRender(currentTab);
-			setTimeout(refreshAds, 1000);
-		});
-
 		document.querySelectorAll('.sortable').forEach(th => {
 			th.style.cursor = 'pointer';
 			th.addEventListener('click', function () {
@@ -815,6 +791,8 @@
 	</script>
 
 	<script>
+		(adsbygoogle = window.adsbygoogle || []).push({});
+		(adsbygoogle = window.adsbygoogle || []).push({});
 		(adsbygoogle = window.adsbygoogle || []).push({});
 		(adsbygoogle = window.adsbygoogle || []).push({});
 	</script>
